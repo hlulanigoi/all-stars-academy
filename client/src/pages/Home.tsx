@@ -35,10 +35,10 @@ export default function Home() {
             <span className="inline-block py-2 px-6 rounded-full bg-secondary/10 border border-secondary/30 text-secondary font-bold tracking-widest text-sm mb-6 uppercase backdrop-blur-sm">
               Est. 2016
             </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-              All Stars <span className="text-secondary">Excellency</span> <br /> Academy
+            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-bold text-white mb-6 leading-tight">
+              All Stars <span className="text-secondary drop-shadow-[0_2px_10px_rgba(255,165,0,0.3)]">Excellency</span> <br /> Academy
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 font-light mb-10 max-w-2xl mx-auto italic font-display">
+            <p className="text-xl md:text-3xl text-white/90 font-light mb-10 max-w-3xl mx-auto italic font-display leading-relaxed">
               "Building Tomorrow’s Legacy Today"
             </p>
             
@@ -132,6 +132,36 @@ export default function Home() {
                 </span>
               </Link>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section className="py-16 bg-white border-t border-b border-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { label: "Success Rate", value: "98%" },
+              { label: "Students Helped", value: "500+" },
+              { label: "Years Experience", value: "8+" },
+              { label: "Subject Experts", value: "12+" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-3xl md:text-5xl font-display font-bold text-primary mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-gray-500 font-medium uppercase tracking-wider text-sm">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
