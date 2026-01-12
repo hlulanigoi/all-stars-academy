@@ -1,16 +1,72 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
+import type { Server } from "http";
 import { storage } from "./storage";
+import { api } from "@shared/routes";
+import { z } from "zod";
+import { insertContactSchema } from "@shared/schema";
 
 export async function registerRoutes(
   httpServer: Server,
-  app: Express
+  app: Express,
 ): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
+  // Contact Form
+  app.post(api.contact.submit.path, async (req, res) => {
+    try {
+      const input = insertContactSchema.parse(req.body);
+      const submission = await storage.createContactSubmission(input);
+      res.status(201).json(submission);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join("."),
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+  // Testimonials
+  app.get(api.testimonials.list.path, async (req, res) => {
+    const testimonials = await storage.getTestimonials();
+    res.json(testimonials);
+  });
+
+  // Seed Data
+  await seedDatabase();
 
   return httpServer;
+}
+
+async function seedDatabase() {
+  const existing = await storage.getTestimonials();
+  if (existing.length === 0) {
+    const seeds = [
+      {
+        name: "Thabo M.",
+        role: "Grade 12 Student",
+        content:
+          "The extra classes helped me jump from 40% to 80% in Mathematics. The teachers are amazing!",
+        rating: 5,
+      },
+      {
+        name: "Lerato K.",
+        role: "Matric Rewrite",
+        content:
+          "I passed my matric rewrite with distinction thanks to All Stars Excellency Academy.",
+        rating: 5,
+      },
+      {
+        name: "Mrs. Dlamini",
+        role: "Parent",
+        content:
+          "Best decision we made for our son. His confidence in Physical Sciences has soared.",
+        rating: 5,
+      },
+    ];
+
+    for (const seed of seeds) {
+      await storage.createTestimonial(seed);
+    }
+  }
 }
