@@ -16,6 +16,7 @@ export const testimonials = pgTable("testimonials", {
   role: text("role").notNull(), // e.g. "Matric Student"
   content: text("content").notNull(),
   rating: serial("rating"), // 1-5
+  image: text("image"), // Added for visual testimonials
 });
 
 export const insertContactSchema = createInsertSchema(contactSubmissions).omit({

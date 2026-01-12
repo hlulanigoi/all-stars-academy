@@ -1,10 +1,16 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Clock, Tag } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, Tag, Star, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/SectionHeading";
+import { useQuery } from "@tanstack/react-query";
+import { type Testimonial } from "@shared/schema";
 
 export default function Home() {
+  const { data: testimonials } = useQuery<Testimonial[]>({ 
+    queryKey: ["/api/testimonials"] 
+  });
+
   return (
     <div className="min-h-screen">
       {/* HERO SECTION */}
@@ -132,6 +138,60 @@ export default function Home() {
                 </span>
               </Link>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* VISUAL TESTIMONIALS */}
+      <section className="py-24 bg-gray-50 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <SectionHeading 
+            title="Voices of Success" 
+            subtitle="Hear from our thriving students and happy parents" 
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            {testimonials?.map((t, i) => (
+              <motion.div
+                key={t.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 flex flex-col h-full"
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="relative">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-secondary ring-4 ring-secondary/10">
+                      {t.image ? (
+                        <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                          {t.name[0]}
+                        </div>
+                      )}
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 bg-secondary p-1 rounded-full text-primary shadow-sm">
+                      <Quote size={12} fill="currentColor" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-display font-bold text-primary text-lg">{t.name}</h4>
+                    <p className="text-gray-500 text-sm">{t.role}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} className="fill-secondary text-secondary" />
+                  ))}
+                </div>
+
+                <p className="text-gray-600 italic leading-relaxed flex-grow">
+                  "{t.content}"
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

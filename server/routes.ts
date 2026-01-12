@@ -48,6 +48,7 @@ async function seedDatabase() {
         content:
           "The extra classes helped me jump from 40% to 80% in Mathematics. The teachers are amazing!",
         rating: 5,
+        image: "/assets/stock_images/smiling_high_school__6f94400c.jpg",
       },
       {
         name: "Lerato K.",
@@ -55,6 +56,7 @@ async function seedDatabase() {
         content:
           "I passed my matric rewrite with distinction thanks to All Stars Excellency Academy.",
         rating: 5,
+        image: "/assets/stock_images/smiling_high_school__93c08cc1.jpg",
       },
       {
         name: "Mrs. Dlamini",
@@ -62,6 +64,7 @@ async function seedDatabase() {
         content:
           "Best decision we made for our son. His confidence in Physical Sciences has soared.",
         rating: 5,
+        image: "/assets/stock_images/smiling_high_school__a55cba15.jpg",
       },
     ];
 
