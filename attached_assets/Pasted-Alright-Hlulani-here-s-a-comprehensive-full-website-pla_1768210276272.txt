@@ -1,0 +1,91 @@
+Alright, Hlulani—here’s a **comprehensive full website plan** for *All Stars Excellency Academy*. This goes beyond a landing page and lays out a complete site map, content structure, and functionality (including WhatsApp integration) so your agent can build it step by step.
+
+---
+
+## 🌐 Full Website Plan – All Stars Excellency Academy
+
+### 🔝 Global Features
+- **Navigation bar (sticky):** Home | About | Subjects | Pricing | Schedule | Testimonials | Contact  
+- **Floating WhatsApp button:** Always visible, links to `https://wa.me/27679454998` with pre‑filled message (“Hi, I’d like to enroll for extra classes”).  
+- **Responsive design:** Mobile‑friendly grid layout.  
+- **Branding:** Navy blue (#001F54), Gold (#FFD700), White (#FFFFFF), Accent Red (#C0392B).  
+- **Footer (global):** Motto, quick links, WhatsApp icon, social media icons, copyright.
+
+---
+
+### 🏠 Home Page
+- Hero banner:  
+  - Headline: “All Stars Excellency Academy”  
+  - Motto: “Building Tomorrow’s Legacy Today”  
+  - CTA button: “Enroll Now on WhatsApp”  
+- Quick highlights: Subjects, Pricing, Schedule.  
+- Background: Inspiring student/classroom imagery.
+
+---
+
+### 📖 About Us Page
+- Established 2016.  
+- Mission: Empower learners through extra classes and matric rewrite support.  
+- Vision: Building tomorrow’s legacy today.  
+- Directors:  
+  - Masakona N.C. – WhatsApp: 076 945 4998 | Call: 069 504 5003  
+  - Netshifhefhe O. – Call: 060 924 4815  
+
+---
+
+### 📚 Subjects Page
+- Grade 8–9: Natural Sciences, Mathematics.  
+- Grade 10–12: Mathematics, Physical Sciences, Accounting, Life Sciences.  
+- Matric Rewrite: Full syllabus support.  
+👉 Display as subject cards with icons (calculator, flask, DNA strand, book).
+
+---
+
+### 💰 Pricing Page
+- **Matric Rewrite:**  
+  - Registration R400  
+  - One Subject R350  
+  - Two Subjects R650  
+  - Three Subjects R900  
+- **Extra Classes (No Registration Fees):**  
+  - One Subject R200  
+  - Two Subjects R300  
+👉 Use a pricing table with “Best Value” highlight.
+
+---
+
+### 📅 Schedule Page
+- Extra Classes: Weekends, sometimes Fridays, holidays.  
+- Matric Rewrite: Monday–Friday, optional Saturday.  
+👉 Display as a timetable grid + downloadable PDF.
+
+---
+
+### 🌟 Testimonials Page
+- Student success stories (quotes + names optional).  
+- Carousel slider for multiple testimonials.  
+- Add “Success Rate” stat (e.g., % of students who improved marks).
+
+---
+
+### 📞 Contact Page
+- WhatsApp button: “Enroll Now” → direct link.  
+- Directors’ details (WhatsApp + call numbers).  
+- Location: Ha Ramavhoya, next to Traffic.  
+- Google Maps embed.  
+- Contact form: Name, Email, Message → sends to academy email.  
+- Operating hours: Mon–Fri: 8am–5pm, Sat: 9am–1pm.
+
+---
+
+## ⚙️ Extra Enhancements
+- **SEO:** Meta tags, keywords like “extra classes Limpopo,” “matric rewrite Polokwane.”  
+- **Analytics:** Google Analytics snippet for visitor tracking.  
+- **Performance:** Optimized images, fast loading.  
+- **Trust signals:** Accreditation badges, “Est. 2016” highlighted.
+
+---
+
+👉 This plan gives you a **professional, multi‑page website** with WhatsApp integration, clear navigation, and trust‑building features. It’s structured so your agent can build each page cleanly and link them together.
+
+Would you like me to now **translate this plan into a ready‑to‑copy HTML/CSS/JS scaffold** (multi‑page with nav bar, WhatsApp buttons, pricing tables, timetable grid, and contact form), so you can drop it straight into Replit and run it?
