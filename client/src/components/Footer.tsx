@@ -1,6 +1,8 @@
 import { Link } from "wouter";
 import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from "lucide-react";
 
+import logoImg from "@assets/image_1768213972984.png";
+
 export function Footer() {
   return (
     <footer className="bg-primary text-white pt-16 pb-8">
@@ -8,10 +10,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-display font-bold">
-              <span className="text-white">All Stars</span>{" "}
-              <span className="text-secondary">Excellency Academy</span>
-            </h3>
+            <div className="flex items-center gap-3">
+              <div className="bg-white p-1 rounded-lg">
+                <img src={logoImg} alt="Logo" className="h-10 w-10 object-contain" />
+              </div>
+              <h3 className="text-2xl font-display font-bold">
+                <span className="text-white">All Stars</span>{" "}
+                <span className="text-secondary">Excellency Academy</span>
+              </h3>
+            </div>
             <p className="text-white/80 leading-relaxed max-w-xs">
               Building Tomorrow’s Legacy Today. We are committed to empowering learners through quality education and dedicated mentorship.
             </p>

@@ -12,6 +12,8 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
+import logoImg from "@assets/image_1768213972984.png";
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [location] = useLocation();
@@ -22,8 +24,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="bg-secondary p-2 rounded-lg text-primary shadow-lg shadow-black/20 group-hover:scale-105 transition-transform duration-300">
-              <GraduationCap size={32} strokeWidth={2.5} />
+            <div className="bg-white p-1 rounded-lg shadow-lg shadow-black/20 group-hover:scale-105 transition-transform duration-300">
+              <img src={logoImg} alt="All Stars Excellency Academy Logo" className="h-12 w-12 object-contain" />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-bold text-lg md:text-xl leading-none text-white tracking-wide group-hover:text-secondary transition-colors">
