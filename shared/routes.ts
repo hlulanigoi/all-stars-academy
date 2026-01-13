@@ -23,6 +23,7 @@ export const api = {
             id: z.number(),
             name: z.string(),
             email: z.string(),
+            role: z.string(),
           }),
           token: z.string(),
         }),
