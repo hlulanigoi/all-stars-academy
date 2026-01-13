@@ -1,11 +1,20 @@
+import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, LogOut, Home, Upload, BookOpen } from "lucide-react";
+import { User, LogOut, Home, Upload, BookOpen, ClipboardList, FileCheck } from "lucide-react";
 import { UploadMaterialForm } from "@/components/UploadMaterialForm";
 import { MaterialsList } from "@/components/MaterialsList";
+import { CreateAssignmentForm } from "@/components/CreateAssignmentForm";
+import { AssignmentsList } from "@/components/AssignmentsList";
+import { SubmitAssignmentDialog } from "@/components/SubmitAssignmentDialog";
+import { MySubmissionsList } from "@/components/MySubmissionsList";
+import { SubmissionsView } from "@/components/SubmissionsView";
+import { useMySubmissions } from "@/hooks/use-submissions";
+import { useAssignmentSubmissions } from "@/hooks/use-submissions";
+import { type Assignment } from "@shared/schema";
 
 export default function Dashboard() {
   const { user, logout } = useAuth();
