@@ -1,11 +1,15 @@
 import { db } from "./db";
+import { eq } from "drizzle-orm";
 import {
   contactSubmissions,
   testimonials,
+  users,
   type ContactSubmission,
   type InsertContactSubmission,
   type Testimonial,
   type InsertTestimonial,
+  type User,
+  type InsertUser,
 } from "@shared/schema";
 
 export interface IStorage {
