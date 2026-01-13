@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, BookOpen, GraduationCap } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -16,7 +17,8 @@ import logoImg from "@assets/image_1768213972984.png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
+  const { user, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-primary text-white shadow-lg border-b border-primary/20">
