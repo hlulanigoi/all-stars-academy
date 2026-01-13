@@ -19,10 +19,25 @@ import { type Assignment } from "@shared/schema";
 export default function Dashboard() {
   const { user, logout } = useAuth();
   const [, setLocation] = useLocation();
+  const [submitDialogOpen, setSubmitDialogOpen] = useState(false);
+  const [selectedAssignment, setSelectedAssignment] = useState<Assignment | null>(null);
+  const [viewingSubmissions, setViewingSubmissions] = useState<Assignment | null>(null);
+  
+  const { data: mySubmissions } = useMySubmissions();
+  const { data: assignmentSubmissions } = useAssignmentSubmissions(viewingSubmissions?.id || null);
 
   const handleLogout = () => {
     logout();
     setLocation("/login");
+  };
+
+  const handleSubmitAssignment = (assignment: Assignment) => {
+    setSelectedAssignment(assignment);
+    setSubmitDialogOpen(true);
+  };
+
+  const handleViewSubmissions = (assignment: Assignment) => {
+    setViewingSubmissions(assignment);
   };
 
   const isTeacher = user?.role === "teacher";
