@@ -53,6 +53,51 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            
+            {user ? (
+              <>
+                <Button
+                  onClick={() => setLocation("/dashboard")}
+                  variant="outline"
+                  className="border-secondary text-secondary hover:bg-secondary hover:text-primary"
+                  data-testid="navbar-dashboard-button"
+                >
+                  <User className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Button>
+                <Button
+                  onClick={() => {
+                    logout();
+                    setLocation("/");
+                  }}
+                  variant="outline"
+                  className="border-white text-white hover:bg-white hover:text-primary"
+                  data-testid="navbar-logout-button"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => setLocation("/login")}
+                  variant="outline"
+                  className="border-secondary text-secondary hover:bg-secondary hover:text-primary"
+                  data-testid="navbar-login-button"
+                >
+                  Login
+                </Button>
+                <Button
+                  onClick={() => setLocation("/register")}
+                  className="bg-secondary text-primary hover:bg-white hover:text-primary font-bold shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5"
+                  data-testid="navbar-register-button"
+                >
+                  Register
+                </Button>
+              </>
+            )}
+            
             <a href="https://wa.me/27679454998?text=Hi,%20I%E2%80%99d%20like%20to%20enroll%20for%20extra%20classes" target="_blank" rel="noopener noreferrer">
               <Button className="bg-secondary text-primary hover:bg-white hover:text-primary font-bold shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5">
                 Enroll Now
