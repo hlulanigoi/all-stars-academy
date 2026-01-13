@@ -41,3 +41,27 @@ export function verifyToken(token: string): { userId: number } | null {
     return null;
   }
 }
+
+export function requireRole(role: string) {
+  return async (req: AuthRequest, res: Response, next: NextFunction) => {
+    try {
+      if (!req.userId) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
+      const user = await storage.getUserById(req.userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      if (user.role !== role) {
+        return res.status(403).json({ message: "Insufficient permissions" });
+      }
+
+      req.userRole = user.role;
+      next();
+    } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  };
+}
