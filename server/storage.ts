@@ -5,6 +5,8 @@ import {
   testimonials,
   users,
   materials,
+  assignments,
+  submissions,
   type ContactSubmission,
   type InsertContactSubmission,
   type Testimonial,
@@ -13,6 +15,10 @@ import {
   type InsertUser,
   type Material,
   type InsertMaterial,
+  type Assignment,
+  type InsertAssignment,
+  type Submission,
+  type InsertSubmission,
 } from "@shared/schema";
 
 export interface IStorage {
