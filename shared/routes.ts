@@ -58,6 +58,7 @@ export const api = {
             id: z.number(),
             name: z.string(),
             email: z.string(),
+            role: z.string(),
           }),
         }),
         401: z.object({ message: z.string() }),
