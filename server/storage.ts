@@ -77,6 +77,28 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result;
   }
+
+  // Material methods
+  async createMaterial(material: InsertMaterial): Promise<Material> {
+    const [result] = await db
+      .insert(materials)
+      .values(material)
+      .returning();
+    return result;
+  }
+
+  async getMaterials(): Promise<Material[]> {
+    return await db.select().from(materials).orderBy(desc(materials.createdAt));
+  }
+
+  async getMaterialById(id: number): Promise<Material | undefined> {
+    const [material] = await db.select().from(materials).where(eq(materials.id, id));
+    return material;
+  }
+
+  async deleteMaterial(id: number): Promise<void> {
+    await db.delete(materials).where(eq(materials.id, id));
+  }
 }
 
 export const storage = new DatabaseStorage();
