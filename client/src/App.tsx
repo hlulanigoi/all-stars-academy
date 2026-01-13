@@ -38,6 +38,10 @@ function ScrollToTop() {
 function Router() {
   const [location] = useLocation();
 
+  // Auth routes don't need Navbar/Footer
+  const isAuthRoute = location === "/login" || location === "/register";
+  const isDashboardRoute = location === "/dashboard";
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -48,6 +52,13 @@ function Router() {
         transition={{ duration: 0.3 }}
       >
         <Switch location={location}>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/dashboard">
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          </Route>
           <Route path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/subjects" component={Subjects} />
