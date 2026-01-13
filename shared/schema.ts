@@ -42,6 +42,33 @@ export const materials = pgTable("materials", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const assignments = pgTable("assignments", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  subject: text("subject").notNull(), // Mathematics, Physical Sciences, etc.
+  grade: text("grade").notNull(), // 8, 9, 10, 11, 12
+  dueDate: timestamp("due_date").notNull(),
+  totalMarks: integer("total_marks").notNull().default(100),
+  createdBy: integer("created_by").notNull(), // Foreign key to users.id (teacher)
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const submissions = pgTable("submissions", {
+  id: serial("id").primaryKey(),
+  assignmentId: integer("assignment_id").notNull(), // Foreign key to assignments.id
+  studentId: integer("student_id").notNull(), // Foreign key to users.id
+  fileName: text("file_name").notNull(),
+  filePath: text("file_path").notNull(),
+  fileSize: integer("file_size").notNull(), // in bytes
+  fileType: text("file_type").notNull(),
+  status: text("status").notNull().default("submitted"), // "submitted", "graded"
+  marks: integer("marks"), // Null until graded
+  feedback: text("feedback"), // Teacher's feedback
+  submittedAt: timestamp("submitted_at").defaultNow(),
+  gradedAt: timestamp("graded_at"),
+});
+
 export const insertUserSchema = createInsertSchema(users, {
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
