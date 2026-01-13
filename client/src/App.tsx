@@ -75,19 +75,31 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="flex flex-col min-h-screen font-body text-foreground bg-background">
-          <ScrollToTop />
-          <Navbar />
-          <main className="flex-grow">
-            <Router />
-          </main>
-          <Footer />
-          <FloatingWhatsApp />
-          <Toaster />
-        </div>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <AppContent />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
+  );
+}
+
+function AppContent() {
+  const [location] = useLocation();
+  const isAuthRoute = location === "/login" || location === "/register";
+  const isDashboardRoute = location === "/dashboard";
+
+  return (
+    <div className="flex flex-col min-h-screen font-body text-foreground bg-background">
+      <ScrollToTop />
+      {!isAuthRoute && !isDashboardRoute && <Navbar />}
+      <main className={isAuthRoute || isDashboardRoute ? "" : "flex-grow"}>
+        <Router />
+      </main>
+      {!isAuthRoute && !isDashboardRoute && <Footer />}
+      {!isAuthRoute && !isDashboardRoute && <FloatingWhatsApp />}
+      <Toaster />
+    </div>
   );
 }
 
