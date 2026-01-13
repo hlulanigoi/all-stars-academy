@@ -44,7 +44,7 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      await register(name, email, password);
+      await register(name, email, password, role);
       toast({
         title: "Success!",
         description: "Your account has been created successfully.",
