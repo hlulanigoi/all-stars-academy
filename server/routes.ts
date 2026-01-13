@@ -11,6 +11,110 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express,
 ): Promise<Server> {
+  // Authentication Routes
+  app.post(api.auth.register.path, async (req, res) => {
+    try {
+      const input = insertUserSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(input.email);
+      if (existingUser) {
+        return res.status(409).json({ message: "User already exists" });
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+      
+      // Create user
+      const user = await storage.createUser({
+        ...input,
+        password: hashedPassword,
+      });
+
+      // Generate token
+      const token = generateToken(user.id);
+
+      res.status(201).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        token,
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join("."),
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post(api.auth.login.path, async (req, res) => {
+    try {
+      const input = loginSchema.parse(req.body);
+      
+      // Find user
+      const user = await storage.getUserByEmail(input.email);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Verify password
+      const isValidPassword = await bcrypt.compare(input.password, user.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      // Generate token
+      const token = generateToken(user.id);
+
+      res.status(200).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        token,
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join("."),
+        });
+      }
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get(api.auth.verify.path, authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const user = await storage.getUserById(req.userId!);
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      res.status(200).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      });
+    } catch (err) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post(api.auth.logout.path, (req, res) => {
+    // With JWT, logout is handled client-side by removing the token
+    res.status(200).json({ message: "Logged out successfully" });
+  });
+
   // Contact Form
   app.post(api.contact.submit.path, async (req, res) => {
     try {
