@@ -144,6 +144,114 @@ export async function registerRoutes(
     res.json(testimonials);
   });
 
+  // Materials Routes
+  // Upload material (teachers only)
+  app.post(
+    api.materials.create.path,
+    authenticateToken,
+    requireRole("teacher"),
+    upload.single("file"),
+    async (req: AuthRequest, res) => {
+      try {
+        if (!req.file) {
+          return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        const { title, description, subject, grade } = req.body;
+
+        // Validate input
+        const materialData = insertMaterialSchema.parse({
+          title,
+          description: description || null,
+          fileName: req.file.originalname,
+          filePath: req.file.path,
+          fileSize: req.file.size,
+          fileType: req.file.mimetype,
+          subject,
+          grade,
+          uploadedBy: req.userId!,
+        });
+
+        const material = await storage.createMaterial(materialData);
+        res.status(201).json(material);
+      } catch (err) {
+        // Delete uploaded file if there's an error
+        if (req.file) {
+          fs.unlinkSync(req.file.path);
+        }
+        
+        if (err instanceof z.ZodError) {
+          return res.status(400).json({
+            message: err.errors[0].message,
+            field: err.errors[0].path.join("."),
+          });
+        }
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  );
+
+  // Get all materials (authenticated users)
+  app.get(api.materials.list.path, authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const materials = await storage.getMaterials();
+      res.json(materials);
+    } catch (err) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Download material file (authenticated users)
+  app.get(api.materials.download.path, authenticateToken, async (req: AuthRequest, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const material = await storage.getMaterialById(id);
+
+      if (!material) {
+        return res.status(404).json({ message: "Material not found" });
+      }
+
+      const filePath = path.resolve(material.filePath);
+      
+      if (!fs.existsSync(filePath)) {
+        return res.status(404).json({ message: "File not found" });
+      }
+
+      res.download(filePath, material.fileName);
+    } catch (err) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Delete material (teachers only)
+  app.delete(
+    api.materials.delete.path,
+    authenticateToken,
+    requireRole("teacher"),
+    async (req: AuthRequest, res) => {
+      try {
+        const id = parseInt(req.params.id);
+        const material = await storage.getMaterialById(id);
+
+        if (!material) {
+          return res.status(404).json({ message: "Material not found" });
+        }
+
+        // Delete file from filesystem
+        const filePath = path.resolve(material.filePath);
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+
+        // Delete from database
+        await storage.deleteMaterial(id);
+        res.status(200).json({ message: "Material deleted successfully" });
+      } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  );
+
   // Seed Data
   await seedDatabase();
 
