@@ -89,6 +89,46 @@ export const api = {
       },
     },
   },
+  materials: {
+    create: {
+      method: "POST" as const,
+      path: "/api/materials",
+      input: insertMaterialSchema,
+      responses: {
+        201: z.custom<typeof materials.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+      },
+    },
+    list: {
+      method: "GET" as const,
+      path: "/api/materials",
+      responses: {
+        200: z.array(z.custom<typeof materials.$inferSelect>()),
+        401: z.object({ message: z.string() }),
+      },
+    },
+    download: {
+      method: "GET" as const,
+      path: "/api/materials/:id/download",
+      responses: {
+        200: z.any(), // File download
+        401: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+    delete: {
+      method: "DELETE" as const,
+      path: "/api/materials/:id",
+      responses: {
+        200: z.object({ message: z.string() }),
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+  },
 };
 
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
