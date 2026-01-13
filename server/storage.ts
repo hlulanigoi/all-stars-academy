@@ -41,6 +41,19 @@ export interface IStorage {
   getMaterials(): Promise<Material[]>;
   getMaterialById(id: number): Promise<Material | undefined>;
   deleteMaterial(id: number): Promise<void>;
+  
+  // Assignment methods
+  createAssignment(assignment: InsertAssignment): Promise<Assignment>;
+  getAssignments(): Promise<Assignment[]>;
+  getAssignmentById(id: number): Promise<Assignment | undefined>;
+  deleteAssignment(id: number): Promise<void>;
+  
+  // Submission methods
+  createSubmission(submission: InsertSubmission): Promise<Submission>;
+  getSubmissionsByAssignment(assignmentId: number): Promise<any[]>;
+  getSubmissionsByStudent(studentId: number): Promise<any[]>;
+  getSubmissionById(id: number): Promise<Submission | undefined>;
+  gradeSubmission(id: number, marks: number, feedback?: string): Promise<Submission>;
 }
 
 export class DatabaseStorage implements IStorage {
