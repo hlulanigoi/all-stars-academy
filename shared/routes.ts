@@ -132,6 +132,98 @@ export const api = {
       },
     },
   },
+  assignments: {
+    create: {
+      method: "POST" as const,
+      path: "/api/assignments",
+      input: insertAssignmentSchema,
+      responses: {
+        201: z.custom<typeof assignments.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+      },
+    },
+    list: {
+      method: "GET" as const,
+      path: "/api/assignments",
+      responses: {
+        200: z.array(z.custom<typeof assignments.$inferSelect>()),
+        401: z.object({ message: z.string() }),
+      },
+    },
+    get: {
+      method: "GET" as const,
+      path: "/api/assignments/:id",
+      responses: {
+        200: z.custom<typeof assignments.$inferSelect>(),
+        401: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+    delete: {
+      method: "DELETE" as const,
+      path: "/api/assignments/:id",
+      responses: {
+        200: z.object({ message: z.string() }),
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+  },
+  submissions: {
+    create: {
+      method: "POST" as const,
+      path: "/api/assignments/:assignmentId/submissions",
+      input: insertSubmissionSchema,
+      responses: {
+        201: z.custom<typeof submissions.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+    listByAssignment: {
+      method: "GET" as const,
+      path: "/api/assignments/:assignmentId/submissions",
+      responses: {
+        200: z.array(z.any()), // Will include student info
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+      },
+    },
+    listByStudent: {
+      method: "GET" as const,
+      path: "/api/submissions/my",
+      responses: {
+        200: z.array(z.any()), // Will include assignment info
+        401: z.object({ message: z.string() }),
+      },
+    },
+    download: {
+      method: "GET" as const,
+      path: "/api/submissions/:id/download",
+      responses: {
+        200: z.any(), // File download
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+    grade: {
+      method: "PUT" as const,
+      path: "/api/submissions/:id/grade",
+      input: gradeSubmissionSchema,
+      responses: {
+        200: z.custom<typeof submissions.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: z.object({ message: z.string() }),
+        403: z.object({ message: z.string() }),
+        404: z.object({ message: z.string() }),
+      },
+    },
+  },
 };
 
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
