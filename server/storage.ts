@@ -29,6 +29,23 @@ export interface IStorage {
 }
 
 export class DatabaseStorage implements IStorage {
+  // User methods
+  async createUser(user: InsertUser): Promise<User> {
+    const [result] = await db.insert(users).values(user).returning();
+    return result;
+  }
+
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async getUserById(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  // Contact methods
   async createContactSubmission(
     submission: InsertContactSubmission,
   ): Promise<ContactSubmission> {
@@ -39,6 +56,7 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
+  // Testimonial methods
   async getTestimonials(): Promise<Testimonial[]> {
     return await db.select().from(testimonials);
   }
