@@ -136,7 +136,61 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 mt-4 border-t border-white/10 px-4">
+            
+            <div className="pt-4 mt-4 border-t border-white/10 px-4 space-y-3">
+              {user ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      setLocation("/dashboard");
+                      setIsOpen(false);
+                    }}
+                    className="w-full bg-secondary text-primary hover:bg-white hover:text-primary font-bold py-6 text-lg"
+                    data-testid="mobile-dashboard-button"
+                  >
+                    <User className="w-5 h-5 mr-2" />
+                    Dashboard
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      logout();
+                      setLocation("/");
+                      setIsOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full border-white text-white hover:bg-white hover:text-primary font-bold py-6 text-lg"
+                    data-testid="mobile-logout-button"
+                  >
+                    <LogOut className="w-5 h-5 mr-2" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      setLocation("/login");
+                      setIsOpen(false);
+                    }}
+                    variant="outline"
+                    className="w-full border-secondary text-secondary hover:bg-secondary hover:text-primary font-bold py-6 text-lg"
+                    data-testid="mobile-login-button"
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setLocation("/register");
+                      setIsOpen(false);
+                    }}
+                    className="w-full bg-secondary text-primary hover:bg-white hover:text-primary font-bold py-6 text-lg"
+                    data-testid="mobile-register-button"
+                  >
+                    Register
+                  </Button>
+                </>
+              )}
+              
               <a href="https://wa.me/27679454998?text=Hi,%20I%E2%80%99d%20like%20to%20enroll%20for%20extra%20classes" target="_blank" rel="noopener noreferrer">
                 <Button className="w-full bg-secondary text-primary hover:bg-white hover:text-primary font-bold py-6 text-lg">
                   Enroll Now
