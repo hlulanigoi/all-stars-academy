@@ -3,7 +3,9 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { insertContactSchema } from "@shared/schema";
+import { insertContactSchema, insertUserSchema, loginSchema } from "@shared/schema";
+import { generateToken, authenticateToken, type AuthRequest } from "./middleware/auth";
+import bcrypt from "bcrypt";
 
 export async function registerRoutes(
   httpServer: Server,
