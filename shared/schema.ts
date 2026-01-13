@@ -28,10 +28,27 @@ export const testimonials = pgTable("testimonials", {
   image: text("image"), // Added for visual testimonials
 });
 
+export const materials = pgTable("materials", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description"),
+  fileName: text("file_name").notNull(),
+  filePath: text("file_path").notNull(),
+  fileSize: integer("file_size").notNull(), // in bytes
+  fileType: text("file_type").notNull(), // e.g., "application/pdf"
+  subject: text("subject").notNull(), // Mathematics, Physical Sciences, etc.
+  grade: text("grade").notNull(), // 8, 9, 10, 11, 12
+  uploadedBy: integer("uploaded_by").notNull(), // Foreign key to users.id
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users, {
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   name: z.string().min(2, "Name must be at least 2 characters"),
+  role: z.enum(["teacher", "student"], {
+    errorMap: () => ({ message: "Role must be either teacher or student" })
+  }),
 }).omit({
   id: true,
   createdAt: true,
