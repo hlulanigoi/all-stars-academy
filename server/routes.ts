@@ -3,7 +3,7 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { insertContactSchema, insertUserSchema, loginSchema, insertMaterialSchema } from "@shared/schema";
+import { insertContactSchema, insertUserSchema, loginSchema, insertMaterialSchema, insertAssignmentSchema, gradeSubmissionSchema } from "@shared/schema";
 import { generateToken, authenticateToken, requireRole, type AuthRequest } from "./middleware/auth";
 import { upload } from "./middleware/upload";
 import bcrypt from "bcrypt";
