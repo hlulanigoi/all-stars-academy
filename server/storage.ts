@@ -13,9 +13,17 @@ import {
 } from "@shared/schema";
 
 export interface IStorage {
+  // User methods
+  createUser(user: InsertUser): Promise<User>;
+  getUserByEmail(email: string): Promise<User | undefined>;
+  getUserById(id: number): Promise<User | undefined>;
+  
+  // Contact methods
   createContactSubmission(
     submission: InsertContactSubmission,
   ): Promise<ContactSubmission>;
+  
+  // Testimonial methods
   getTestimonials(): Promise<Testimonial[]>;
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
 }
