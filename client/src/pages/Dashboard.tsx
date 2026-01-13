@@ -138,8 +138,99 @@ export default function Dashboard() {
               )}
             </CardContent>
           </Card>
+
+          {/* Assignments System */}
+          <Card data-testid="assignments-card">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ClipboardList className="w-5 h-5" />
+                Assignments
+              </CardTitle>
+              <CardDescription>
+                {isTeacher
+                  ? "Create and manage student assignments"
+                  : "View assignments and submit your work"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {isTeacher ? (
+                <Tabs defaultValue="create" className="w-full">
+                  <TabsList className="grid w-full max-w-lg grid-cols-3">
+                    <TabsTrigger value="create" data-testid="create-assignment-tab">
+                      <ClipboardList className="w-4 h-4 mr-2" />
+                      Create
+                    </TabsTrigger>
+                    <TabsTrigger value="manage-assignments" data-testid="manage-assignments-tab">
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      Manage
+                    </TabsTrigger>
+                    {viewingSubmissions && (
+                      <TabsTrigger value="view-submissions" data-testid="view-submissions-tab">
+                        <FileCheck className="w-4 h-4 mr-2" />
+                        Submissions
+                      </TabsTrigger>
+                    )}
+                  </TabsList>
+                  <TabsContent value="create" className="mt-6">
+                    <CreateAssignmentForm />
+                  </TabsContent>
+                  <TabsContent value="manage-assignments" className="mt-6">
+                    <AssignmentsList 
+                      isTeacher={true}
+                      onViewSubmissions={handleViewSubmissions}
+                    />
+                  </TabsContent>
+                  {viewingSubmissions && (
+                    <TabsContent value="view-submissions" className="mt-6">
+                      <div className="space-y-4">
+                        <div>
+                          <h3 className="text-lg font-semibold">{viewingSubmissions.title}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {viewingSubmissions.subject} - Grade {viewingSubmissions.grade}
+                          </p>
+                        </div>
+                        <SubmissionsView 
+                          assignment={viewingSubmissions}
+                          submissions={assignmentSubmissions || []}
+                        />
+                      </div>
+                    </TabsContent>
+                  )}
+                </Tabs>
+              ) : (
+                <Tabs defaultValue="assignments" className="w-full">
+                  <TabsList className="grid w-full max-w-md grid-cols-2">
+                    <TabsTrigger value="assignments" data-testid="student-assignments-tab">
+                      <ClipboardList className="w-4 h-4 mr-2" />
+                      Assignments
+                    </TabsTrigger>
+                    <TabsTrigger value="my-submissions" data-testid="my-submissions-tab">
+                      <FileCheck className="w-4 h-4 mr-2" />
+                      My Submissions
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="assignments" className="mt-6">
+                    <AssignmentsList 
+                      isTeacher={false}
+                      onSubmit={handleSubmitAssignment}
+                    />
+                  </TabsContent>
+                  <TabsContent value="my-submissions" className="mt-6">
+                    <MySubmissionsList submissions={mySubmissions || []} />
+                  </TabsContent>
+                </Tabs>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
+
+      {/* Submit Assignment Dialog */}
+      <SubmitAssignmentDialog
+        assignment={selectedAssignment}
+        open={submitDialogOpen}
+        onOpenChange={setSubmitDialogOpen}
+      />
     </div>
   );
 }
