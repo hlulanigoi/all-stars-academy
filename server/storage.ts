@@ -29,6 +29,12 @@ export interface IStorage {
   // Testimonial methods
   getTestimonials(): Promise<Testimonial[]>;
   createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
+  
+  // Material methods
+  createMaterial(material: InsertMaterial): Promise<Material>;
+  getMaterials(): Promise<Material[]>;
+  getMaterialById(id: number): Promise<Material | undefined>;
+  deleteMaterial(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
