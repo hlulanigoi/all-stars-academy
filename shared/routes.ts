@@ -12,6 +12,63 @@ export const errorSchemas = {
 };
 
 export const api = {
+  auth: {
+    register: {
+      method: "POST" as const,
+      path: "/api/auth/register",
+      input: insertUserSchema,
+      responses: {
+        201: z.object({
+          user: z.object({
+            id: z.number(),
+            name: z.string(),
+            email: z.string(),
+          }),
+          token: z.string(),
+        }),
+        400: errorSchemas.validation,
+        409: z.object({ message: z.string() }),
+      },
+    },
+    login: {
+      method: "POST" as const,
+      path: "/api/auth/login",
+      input: loginSchema,
+      responses: {
+        200: z.object({
+          user: z.object({
+            id: z.number(),
+            name: z.string(),
+            email: z.string(),
+          }),
+          token: z.string(),
+        }),
+        400: errorSchemas.validation,
+        401: z.object({ message: z.string() }),
+      },
+    },
+    verify: {
+      method: "GET" as const,
+      path: "/api/auth/verify",
+      responses: {
+        200: z.object({
+          user: z.object({
+            id: z.number(),
+            name: z.string(),
+            email: z.string(),
+          }),
+        }),
+        401: z.object({ message: z.string() }),
+      },
+    },
+    logout: {
+      method: "POST" as const,
+      path: "/api/auth/logout",
+      responses: {
+        200: z.object({ message: z.string() }),
+      },
+    },
+  },
   contact: {
     submit: {
       method: "POST" as const,
