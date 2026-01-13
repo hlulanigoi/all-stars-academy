@@ -120,6 +120,41 @@ export default function Register() {
                 data-testid="register-confirm-password-input"
               />
             </div>
+            <div className="space-y-3">
+              <Label>I am a...</Label>
+              <RadioGroup value={role} onValueChange={setRole} className="grid grid-cols-2 gap-4">
+                <div>
+                  <RadioGroupItem
+                    value="student"
+                    id="student"
+                    className="peer sr-only"
+                  />
+                  <Label
+                    htmlFor="student"
+                    className="flex flex-col items-center justify-between rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                    data-testid="role-student"
+                  >
+                    <GraduationCap className="mb-3 h-6 w-6" />
+                    <span className="text-sm font-medium">Student</span>
+                  </Label>
+                </div>
+                <div>
+                  <RadioGroupItem
+                    value="teacher"
+                    id="teacher"
+                    className="peer sr-only"
+                  />
+                  <Label
+                    htmlFor="teacher"
+                    className="flex flex-col items-center justify-between rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                    data-testid="role-teacher"
+                  >
+                    <BookOpen className="mb-3 h-6 w-6" />
+                    <span className="text-sm font-medium">Teacher</span>
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button
