@@ -68,6 +68,19 @@ export const insertTestimonialSchema = createInsertSchema(testimonials).omit({
   id: true,
 });
 
+export const insertMaterialSchema = createInsertSchema(materials, {
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  subject: z.enum(["Mathematics", "Physical Sciences", "English", "Life Sciences", "Accounting"], {
+    errorMap: () => ({ message: "Invalid subject" })
+  }),
+  grade: z.enum(["8", "9", "10", "11", "12"], {
+    errorMap: () => ({ message: "Grade must be between 8 and 12" })
+  }),
+}).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
@@ -77,3 +90,6 @@ export type InsertContactSubmission = z.infer<typeof insertContactSchema>;
 
 export type Testimonial = typeof testimonials.$inferSelect;
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+
+export type Material = typeof materials.$inferSelect;
+export type InsertMaterial = z.infer<typeof insertMaterialSchema>;
