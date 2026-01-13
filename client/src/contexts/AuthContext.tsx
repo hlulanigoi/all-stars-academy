@@ -77,13 +77,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("authToken", data.token);
   };
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, email: string, password: string, role: string) => {
     const response = await fetch(api.auth.register.path, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name, email, password, role }),
     });
 
     if (!response.ok) {
