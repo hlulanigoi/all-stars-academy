@@ -108,6 +108,35 @@ export const insertMaterialSchema = createInsertSchema(materials, {
   createdAt: true,
 });
 
+export const insertAssignmentSchema = createInsertSchema(assignments, {
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  subject: z.enum(["Mathematics", "Physical Sciences", "English", "Life Sciences", "Accounting"], {
+    errorMap: () => ({ message: "Invalid subject" })
+  }),
+  grade: z.enum(["8", "9", "10", "11", "12"], {
+    errorMap: () => ({ message: "Grade must be between 8 and 12" })
+  }),
+  totalMarks: z.number().min(1, "Total marks must be at least 1").max(1000, "Total marks cannot exceed 1000"),
+  dueDate: z.date(),
+}).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSubmissionSchema = createInsertSchema(submissions, {
+  assignmentId: z.number(),
+  studentId: z.number(),
+}).omit({
+  id: true,
+  submittedAt: true,
+  gradedAt: true,
+});
+
+export const gradeSubmissionSchema = z.object({
+  marks: z.number().min(0, "Marks cannot be negative"),
+  feedback: z.string().optional(),
+});
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
@@ -120,3 +149,9 @@ export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
 
 export type Material = typeof materials.$inferSelect;
 export type InsertMaterial = z.infer<typeof insertMaterialSchema>;
+
+export type Assignment = typeof assignments.$inferSelect;
+export type InsertAssignment = z.infer<typeof insertAssignmentSchema>;
+
+export type Submission = typeof submissions.$inferSelect;
+export type InsertSubmission = z.infer<typeof insertSubmissionSchema>;
